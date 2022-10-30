@@ -231,6 +231,103 @@ ec2-user]# cat /var/lib/jenkins/secrets/initialAdminPassword
 ````
 > Unlock the jenkins and install the suggested plugins:
 
+![alt text](https://github.com/SuryakiranSubramaniam/Updating-DockerHub-with-Jenkins-Ansible-and-GitHub/blob/main/image/1.png)
+![alt text](https://github.com/SuryakiranSubramaniam/Updating-DockerHub-with-Jenkins-Ansible-and-GitHub/blob/main/image/2.png)
+![alt text](https://github.com/SuryakiranSubramaniam/Updating-DockerHub-with-Jenkins-Ansible-and-GitHub/blob/main/image/3.png)
+![alt text](https://github.com/SuryakiranSubramaniam/Updating-DockerHub-with-Jenkins-Ansible-and-GitHub/blob/main/image/4.png)
+![alt text](https://github.com/SuryakiranSubramaniam/Updating-DockerHub-with-Jenkins-Ansible-and-GitHub/blob/main/image/5.png)
+## Jenkins output
 
+````
+Started by user admin
+Running as SYSTEM
+Building in workspace /var/lib/jenkins/workspace/Docker-image-Build-test
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/lib/jenkins/workspace/Docker-image-Build-test/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/SuryakiranSubramaniam/flaskapp.git # timeout=10
+Fetching upstream changes from https://github.com/SuryakiranSubramaniam/flaskapp.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.37.1'
+ > git fetch --tags --force --progress -- https://github.com/SuryakiranSubramaniam/flaskapp.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+Checking out Revision 37c4922b641fae8a3eccb65eca2afce358112a76 (refs/remotes/origin/master)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 37c4922b641fae8a3eccb65eca2afce358112a76 # timeout=10
+Commit message: "Update app.py"
+ > git rev-list --no-walk 37c4922b641fae8a3eccb65eca2afce358112a76 # timeout=10
+[Docker-image-Build-test] $ /usr/bin/ansible-playbook /var/deployment/main2.yml -i /var/deployment/hosts -f 5 --private-key /tmp/ssh11123704362781934539.key -u ec2-user --vault-password-file /var/lib/jenkins/workspace/Docker-image-Build-test/vault9849483424531341358.password
 
+PLAY [Building Docker Image From Grihub Repository] ****************************
+
+TASK [Gathering Facts] *********************************************************
+[WARNING]: Platform linux on host 172.31.46.22 is using the discovered Python
+interpreter at /usr/bin/python, but future installation of another Python
+interpreter could change this. See https://docs.ansible.com/ansible/2.9/referen
+ce_appendices/interpreter_discovery.html for more information.
+ok: [172.31.46.22]
+
+TASK [Build - Installing packages] *********************************************
+ok: [172.31.46.22]
+
+TASK [Build - Adding Ec2-user to docker group] *********************************
+ok: [172.31.46.22]
+
+TASK [Build - Installing Python Extension For Docker] **************************
+ok: [172.31.46.22]
+
+TASK [Build - Restarting/Enabling Docker Service] ******************************
+changed: [172.31.46.22]
+
+TASK [Build - Clonning Repo https://github.com/SuryakiranSubramaniam/flaskapp.git] ***
+changed: [172.31.46.22]
+
+TASK [Build - Loging to Docker-hub Account] ************************************
+changed: [172.31.46.22]
+
+TASK [Build - Creating Docker Image And Push To Docker-hub] ********************
+changed: [172.31.46.22] => (item=37c4922b641fae8a3eccb65eca2afce358112a76)
+ok: [172.31.46.22] => (item=latest)
+
+TASK [Build - Deleting Local Image From Build Server] **************************
+changed: [172.31.46.22] => (item=37c4922b641fae8a3eccb65eca2afce358112a76)
+changed: [172.31.46.22] => (item=latest)
+
+TASK [Build - Logout to Docker-hub Account] ************************************
+changed: [172.31.46.22]
+
+PLAY [Running Image On The Test Server] ****************************************
+
+TASK [Gathering Facts] *********************************************************
+[WARNING]: Platform linux on host 172.31.40.36 is using the discovered Python
+interpreter at /usr/bin/python, but future installation of another Python
+interpreter could change this. See https://docs.ansible.com/ansible/2.9/referen
+ce_appendices/interpreter_discovery.html for more information.
+ok: [172.31.40.36]
+
+TASK [Test - Installing Packages] **********************************************
+ok: [172.31.40.36]
+
+TASK [Test - Adding Ec2-user to docker group] **********************************
+ok: [172.31.40.36]
+
+TASK [Test - Installing Python Extension For Docker] ***************************
+ok: [172.31.40.36]
+
+TASK [Test - Docker service restart/enable] ************************************
+ok: [172.31.40.36]
+
+TASK [Test - Pulling Docker Image] *********************************************
+changed: [172.31.40.36]
+
+TASK [Test- Run Container] *****************************************************
+changed: [172.31.40.36]
+
+PLAY RECAP *********************************************************************
+172.31.40.36               : ok=7    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+172.31.46.22               : ok=10   changed=6    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Finished: SUCCESS
+````
 
